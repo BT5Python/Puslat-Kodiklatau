@@ -47,6 +47,174 @@
 </body>
 </html>
 
+<table>
+<thead>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intel Personnel Database</title>
+<style>
+    body {
+        font-family: 'Courier New', monospace;
+        background-color: #0a0a0a;
+        color: #00ff9d;
+        padding: 20px;
+    }
+    h1 {
+        text-align: center;
+        color: #00ffaa;
+    }
+    .container {
+        max-width: 700px;
+        margin: auto;
+        background: #111;
+        padding: 20px;
+        border: 1px solid #00ff9d;
+        border-radius: 8px;
+    }
+    input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        background: #000;
+        border: 1px solid #00ff9d;
+        color: #00ff9d;
+        font-size: 16px;
+    }
+    #output {
+        white-space: pre-wrap;
+        background: #000;
+        color: #00ff9d;
+        padding: 20px;
+        border: 1px solid #00ff9d;
+        margin-top: 20px;
+        border-radius: 6px;
+    }
+    .not-found {
+        color: #ff4d4d;
+        font-weight: bold;
+    }
+</style>
+</thead>
+<tbody>
+
+<h1>INTELLIGENCE DATABASE ACCESS TERMINAL</h1>
+
+<div class="container">
+    <label>Enter Code Name or Real Name:</label>
+    <input type="text" id="search" placeholder="e.g. SPECTER-07 or Dimas Adi">
+    <div id="output"></div>
+</div>
+
+<script>
+// ======= DATABASE PERSONEL (contoh) =======
+const personnelDB = [
+    {
+        code_name: "SPECTER-07",
+        real_name: "Dimas Adi",
+        gender: "Male",
+        dob: "1990-02-14",
+        nationality: "Indonesia",
+        birth_place: "Jakarta",
+        status: "ACTIVE",
+        clearance: "OMEGA-3",
+        unit: "SIGMA OPERATIONS DIVISION",
+        specialization: "Cyber Reconnaissance / Counterintelligence",
+        alias: "Ghostline, Echo Node",
+        ops_completed: 43,
+        success_rate: 96
+    },
+    {
+        code_name: "VIXEN-21",
+        real_name: "Nadia Putri",
+        gender: "Female",
+        dob: "1993-09-21",
+        nationality: "Indonesia",
+        birth_place: "Bandung",
+        status: "ACTIVE",
+        clearance: "ALPHA-2",
+        unit: "STEALTH INTEL UNIT",
+        specialization: "Undercover Operations / Infiltration",
+        alias: "Black Orchid",
+        ops_completed: 58,
+        success_rate: 89
+    },
+    {
+        code_name: "FALCON-03",
+        real_name: "Arif Nugraha",
+        gender: "Male",
+        dob: "1988-07-02",
+        nationality: "Indonesia",
+        birth_place: "Surabaya",
+        status: "INACTIVE",
+        clearance: "BETA-1",
+        unit: "TACTICAL RESPONSE TEAM",
+        specialization: "Field Strategy / Weapons Expert",
+        alias: "Falcon",
+        ops_completed: 71,
+        success_rate: 93
+    }
+];
+
+// ======= PENCARIAN OTOMATIS =======
+document.getElementById("search").addEventListener("input", function() {
+    const query = this.value.trim().toLowerCase();
+    const output = document.getElementById("output");
+
+    if (query === "") {
+        output.textContent = "";
+        return;
+    }
+
+    const agent = personnelDB.find(p =>
+        p.code_name.toLowerCase().includes(query) ||
+        p.real_name.toLowerCase().includes(query)
+    );
+
+    if (agent) {
+        output.textContent = `
+========================================
+|   FILE: PERSONNEL INTELLIGENCE DATA   |
+|   CLASSIFICATION: TOP SECRET          |
+========================================
+
+[IDENTITY DATA]
+--------------------------------------------------
+CODE NAME      : ${agent.code_name}
+REAL NAME      : ${agent.real_name}
+GENDER         : ${agent.gender}
+DATE OF BIRTH  : ${agent.dob}
+NATIONALITY    : ${agent.nationality}
+PLACE OF BIRTH : ${agent.birth_place}
+CURRENT STATUS : ${agent.status}
+CLEARANCE LVL  : ${agent.clearance}
+
+[OPERATIONAL RECORD]
+--------------------------------------------------
+ASSIGNED UNIT  : ${agent.unit}
+SPECIALIZATION : ${agent.specialization}
+COMPLETED OPS  : ${agent.ops_completed}
+SUCCESS RATE   : ${agent.success_rate}%
+KNOWN ALIASES  : ${agent.alias}
+
+[SECURITY FOOTNOTE]
+--------------------------------------------------
+This dossier is property of the Directorate of Covert Operations.
+Unauthorized access or duplication is punishable under Directive 47-A.
+
+<END OF FILE>
+========================================
+Retrieved on: ${new Date().toLocaleString()}
+`;
+    } else {
+        output.innerHTML = `<span class="not-found">No matching personnel found...</span>`;
+    }
+});
+</script>
+
+</tbody>
+</table>
+
+
 
 
 
