@@ -55,58 +55,118 @@
 <style>
     body {
         font-family: 'Courier New', monospace;
-        background-color: #0a0a0a;
-        color: #00ff9d;
-        padding: 20px;
+        
+        color: #00FF00;
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
     }
+
     h1 {
         text-align: center;
-        color: #00ffaa;
+        color: #00FF00;
+        margin: 15px 0;
+        letter-spacing: 2px;
+        text-shadow: 0 0 8px #00FF00;
     }
-    .container {
-        max-width: 700px;
-        margin: auto;
-        background: #111;
+
+    .main-container {
+        display: flex;
+        flex: 1;
+        border-top: 1px solid #00FF00;
+    }
+
+    .search-panel {
+        width: 35%;
         padding: 20px;
-        border: 1px solid #00ff9d;
-        border-radius: 8px;
+        
+        display: flex;
+        flex-direction: column;
+        border-right: 2px solid #00FF00;
     }
+
+    .search-panel h2 {
+        text-align: center;
+        color: #00FF00;
+        margin-bottom: 20px;
+        text-shadow: 0 0 5px #00FF00;
+    }
+
     input {
-        width: 100%;
+        
+        border: 1px solid #00FF00;
+        color: #00FF00;
         padding: 10px;
-        margin: 10px 0;
-        background: #000;
-        border: 1px solid #00ff9d;
-        color: #00ff9d;
+        margin-bottom: 15px;
         font-size: 16px;
+        border-radius: 4px;
+        outline: none;
     }
-    #output {
-        white-space: pre-wrap;
-        background: #000;
-        color: #00ff9d;
+
+    input:focus {
+        box-shadow: 0 0 10px #00FF00;
+    }
+
+    .info-text {
+        color: #00FF00;
+        font-size: 14px;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .output-panel {
+        flex: 1;
         padding: 20px;
-        border: 1px solid #00ff9d;
-        margin-top: 20px;
-        border-radius: 6px;
+        
+        white-space: pre-wrap;
+        overflow-y: auto;
+        border-left: 2px solid #00FF00;
+        text-shadow: 0 0 5px #00FF00;
+        line-height: 1.4;
     }
+
     .not-found {
-        color: #ff4d4d;
+        color: #FF0000;
         font-weight: bold;
+        text-shadow: 0 0 5px #FF0000;
+    }
+
+    @media (max-width: 768px) {
+        .main-container {
+            flex-direction: column;
+        }
+        .search-panel, .output-panel {
+            width: 100%;
+            border-right: none;
+            border-left: none;
+            border-bottom: 1px solid #00FF00;
+        }
     }
 </style>
 </thead>
 <tbody>
 
-<h1>INTELLIGENCE DATABASE ACCESS TERMINAL</h1>
+<h1>PUSLAT KODIKLATAU</h1>
+<h1>INTELLIGENCE DATABASE TERMINAL</h1>
 
-<div class="container">
-    <label>Enter Code Name or Real Name:</label>
-    <input type="text" id="search" placeholder="e.g. SPECTER-07 or Dimas Adi">
-    <div id="output"></div>
+<div class="main-container">
+    <!-- Panel kiri -->
+    <div class="search-panel">
+        <h2>🔍 Data Lookup</h2>
+        <label for="search">Masukkan Code Name / Nama Lengkap:</label>
+        <input type="text" id="search" placeholder="Contoh: SPECTER-07 atau Nadia Putri">
+        <p class="info-text">⚠️ Harus ketik nama/kode persis lalu tekan ENTER.</p>
+    </div>
+
+    <!-- Panel kanan -->
+    <div class="output-panel" id="output">
+        ⚠️ Tidak ada data yang ditampilkan. Ketik di panel kiri untuk mengakses file personel.
+    </div>
 </div>
 
 <script>
-// ======= DATABASE PERSONEL (contoh) =======
+// ======= DATABASE PERSONEL =======
 const personnelDB = [
     {
         code_name: "SPECTER-07",
@@ -155,23 +215,63 @@ const personnelDB = [
     }
 ];
 
-// ======= PENCARIAN OTOMATIS =======
-document.getElementById("search").addEventListener("input", function() {
-    const query = this.value.trim().toLowerCase();
-    const output = document.getElementById("output");
-
-    if (query === "") {
-        output.textContent = "";
-        return;
+// ======= FUNGSI TYPEWRITER =======
+function typeWriter(element, text, speed = 10) {
+    element.textContent = "";
+    let i = 0;
+    function typing() {
+        if (i < text.length) {
+            element.textContent += text.charAt(i);
+            i++;
+            setTimeout(typing, speed);
+        }
     }
+    typing();
+}
 
-    const agent = personnelDB.find(p =>
-        p.code_name.toLowerCase().includes(query) ||
-        p.real_name.toLowerCase().includes(query)
-    );
+// ======= ANIMASI LOADING =======
+function simulateAccessSequence(element, callback) {
+    const steps = [
+        ">>> INITIALIZING CONNECTION...",
+        ">>> ACCESSING DATABASE NODE...",
+        ">>> VERIFYING SECURITY CLEARANCE...",
+        ">>> CLEARANCE LEVEL VERIFIED ✔",
+        ">>> RETRIEVING PERSONNEL DATA..."
+    ];
+    let i = 0;
+    element.textContent = "";
 
-    if (agent) {
-        output.textContent = `
+    function nextStep() {
+        if (i < steps.length) {
+            element.textContent += steps[i] + "\n";
+            i++;
+            setTimeout(nextStep, 800);
+        } else {
+            setTimeout(callback, 800);
+        }
+    }
+    nextStep();
+}
+
+// ======= PENCARIAN (Exact Match + Loading) =======
+document.getElementById("search").addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+        const query = this.value.trim().toLowerCase();
+        const output = document.getElementById("output");
+
+        if (query === "") {
+            output.textContent = "⚠️ Tidak ada data yang ditampilkan. Ketik di panel kiri untuk mengakses file personel.";
+            return;
+        }
+
+        const agent = personnelDB.find(p =>
+            p.code_name.toLowerCase() === query ||
+            p.real_name.toLowerCase() === query
+        );
+
+        if (agent) {
+            simulateAccessSequence(output, () => {
+                const dossier = `
 ========================================
 |   FILE: PERSONNEL INTELLIGENCE DATA   |
 |   CLASSIFICATION: TOP SECRET          |
@@ -205,20 +305,14 @@ Unauthorized access or duplication is punishable under Directive 47-A.
 ========================================
 Retrieved on: ${new Date().toLocaleString()}
 `;
-    } else {
-        output.innerHTML = `<span class="not-found">No matching personnel found...</span>`;
+                typeWriter(output, dossier, 5);
+            });
+        } else {
+            output.innerHTML = `<span class="not-found">❌ ACCESS DENIED: No personnel record found for "${this.value}".</span>`;
+        }
     }
 });
 </script>
 
 </tbody>
 </table>
-
-
-
-
-
-
-
-
-
