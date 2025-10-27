@@ -1,374 +1,123 @@
-<!DOCTYPE html>
-<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Puslat Database</title>
-    <style>
-        body {
-            background-color:black;
-        }
-        /* Gaya untuk header */
-        header {
-            background-color: black; /* Biru */
-            color: white;
-            padding: 20px;
-            text-align: center;
-            font-family: Arial, sans-serif;
-        }
-
-        /* Tambahan: navigasi sederhana */
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin: 0 15px;
-            font-weight: bold;
-        }
-
-        nav a:hover {
-            text-decoration: underline;
-        }
-
-        .text {
-            font-size: 75px; color: black;
-            color:#00ff00;
-        }
-        
-        .text1 {
-            font-size: 30px; color: black;
-            color:#00ff00;
-        }
-    </style>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-<body>
-    <header>
-        <h1 class="text">PUSLAT KODIKLATAU</h1>
-        <h1 class="text1">INTELLIGENCE DATABASE TERMINAL</h1>
-        <nav>
-        </nav>
-    </header>
+  <style>
 
-    <main>
-        
-    </main>
-</body>
-</html>
 
-<table>
-<thead>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Intel Personnel Database</title>
-<style>
-    body {
-        font-family: 'Courier New', monospace;
-        
-        color: #00FF00;
-        margin: 0;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-    }
+/* -----------------------------------------------
+login page Style
+Name  : Andi Darmawan
+Youtube : Go For Edu
+Date    : 15 Oktober 2025
+----------------------------------------------- */
 
-    h1 {
-        text-align: center;
-        color: #00FF00;
-        margin: 15px 0;
-        letter-spacing: 2px;
-    }
+ .inputtext {
+  width: 100%;
+  vertical-align: middle;
+  margin: 5px 10px 5px 0;
+  padding: 10px;  
+  border: 1px solid #00FF00;
+  border-radius: 0px;
+  box-sizing: border-box;
+  color: 00ff00;
+  background:transparent
 
-    .main-container {
-        display: flex;
-        flex: 1;
-        border-top: 1px solid #00FF00;
-    }
+}
 
-    .search-panel {
-        width: 35%;
-        padding: 20px;
-        
-        display: flex;
-        flex-direction: column;
-        border-right: 2px solid #00FF00;
-    }
+.tombol {
+  width: 100%;
+  vertical-align: middle;
+  margin: 5px 10px 5px 0;
+  padding: 10px;  
+  border: 1px solid #00FF00;
+  border-radius: 0px;
+  box-sizing: border-box;
+  color: 00ff00;
+  background:transparent  
+}
 
-    .search-panel h2 {
-        text-align: center;
-        color: #00FF00;
-        margin-bottom: 20px;
-    }
+div {
+  font-family: arial;
+  font-weight: bold;
+  
+}
 
-    input {
-        background:transparent;
-        border: 1px solid #00FF00;
-        color: #00FF00;
-        padding: 10px;
-        margin-bottom: 15px;
-        font-size: 16px;
-        border-radius: 4px;
-        outline: none;
-    }
+#timer{ 
+color: red;
+}
 
-    input:focus {
-    }
+ body {
+  overflow-y: hidden; /* Hide vertical scrollbar */
+  overflow-x: hidden; /* Hide horizontal scrollbar */
+}
 
-    .info-text {
-        color: #00FF00;
-        font-size: 14px;
-        text-align: center;
-        margin-top: 10px;
-    }
-
-    .output-panel {
-        flex: 1;
-        padding: 20px;
-        
-        white-space: pre-wrap;
-        overflow-y: auto;
-        border-left: 2px solid #00FF00;
-        line-height: 1.4;
-    }
-
-    .not-found {
-        color: #FF0000;
-        font-weight: bold;
-    }
-
-    @media (max-width: 768px) {
-        .main-container {
-            flex-direction: column;
-        }
-        .search-panel, .output-panel {
-            width: 100%;
-            border-right: none;
-            border-left: none;
-            border-bottom: 1px solid #00FF00;
-        }
-    }
 </style>
-</thead>
-<tbody>
 
-<div class="main-container">
-    <!-- Panel kiri -->
-    <div class="search-panel">
-        <h2>🔍 Data Lookup</h2>
-        <label for="search">Masukkan Code Name / Nama Lengkap:</label>
-        <input type="text" id="search" placeholder="Contoh: SPECTER-07 atau Nadia Putri">
-        <p class="info-text">⚠️ Harus ketik nama/kode persis lalu tekan ENTER.</p>
-    </div>
+<body>
 
-    <!-- Panel kanan -->
-    <div class="output-panel" id="output">
-        ⚠️ Tidak ada data yang ditampilkan. Ketik di panel kiri untuk mengakses file personel.
-    </div>
+<center>
+
+<center>
+
+<div class="div1">
+
+<form name="myform" method="post">
+
+  <input type="text" name="uname" class="inputtext" autocomplete="off" placeholder="username">
+  <br>
+  <input type="password" name="pass" class="inputtext" autocomplete="off" placeholder="password">
+  <br>
+  <div id="timer"></div>
+  <br>
+  <input type="button" class="tombol" name="log" id="logbutton" value="LOGIN" onclick="myfunction()">
+  <br><br>
+
+
+</form>
+  
+
+
 </div>
 
-<script>
-// ======= DATABASE PERSONEL =======
-const personnelDB = [
-    {
-        code_name: "Andi Darmawan, S.E",
-        real_name: "Penata Tk.I IIId",
-        gender: "197905032009121002",
-        dob: "Tur Adminpers Dispers Puslat Kodiklatau",
-        nationality: "Indonesia",
-        birth_place: "Subang",
-        status: "ACTIVE",
-        clearance: "OMEGA-3",
-        unit: "            SD Angkasa II Halim Jakarta              17/07/1997",
-        specialization: "SMP Negeri 80 Halim Jakarta",
-        alias: "SMU Negeri 42 halim Jakarta",
-        ops_completed: "Universitas Gunadarma salemba Jakarta",
-        success_rate: 96
-    },
-    {
-        code_name: "VIXEN-21", 
-        real_name: "Nadia Putri", 
-        gender: "Female", 
-        dob: "1993-09-21", 
-        nationality: "Indonesia", 
-        birth_place: "Bandung", 
-        status: "ACTIVE", 
-        clearance: "ALPHA-2", 
-        unit: "STEALTH INTEL UNIT", 
-        specialization: "Undercover Operations / Infiltration", 
-        alias: "Black Orchid", 
-        ops_completed: 58, 
-        success_rate: 89
-    },
-    {
-        code_name: "FALCON-03", 
-        real_name: "Arif Nugraha", 
-        gender: "Male", 
-        dob: "1988-07-02", 
-        nationality: "Indonesia", 
-        birth_place: "Surabaya", 
-        status: "INACTIVE", 
-        clearance: "BETA-1", 
-        unit: "TACTICAL RESPONSE TEAM", 
-        specialization: "Field Strategy / Weapons Expert", 
-        alias: "Falcon", 
-        ops_completed: 71, 
-        success_rate: 93
-    }
-];
+</center>
 
-// ======= FUNGSI TYPEWRITER =======
-function typeWriter(element, text, speed = 10) {
-    element.textContent = "";
-    let i = 0;
-    function typing() {
-        if (i < text.length) {
-            element.textContent += text.charAt(i);
-            i++;
-            setTimeout(typing, speed);
-        }
-    }
-    typing();
-}
+</center>
 
-// ======= ANIMASI LOADING =======
-function simulateAccessSequence(element, callback) {
-    const steps = [
-        ">>> INITIALIZING CONNECTION...",
-        ">>> ACCESSING DATABASE NODE...",
-        ">>> VERIFYING SECURITY CLEARANCE...",
-        ">>> CLEARANCE LEVEL VERIFIED ✔",
-        ">>> RETRIEVING PERSONNEL DATA..."
-    ];
-    let i = 0;
-    element.textContent = "";
+</body>
 
-    function nextStep() {
-        if (i < steps.length) {
-            element.textContent += steps[i] + "\n";
-            i++;
-            setTimeout(nextStep, 800);
-        } else {
-            setTimeout(callback, 800);
-        }
-    }
-    nextStep();
-}
+<script type="text/javascript">
+  
+  function myfunction ()
+  {
 
-// ======= PENCARIAN (Exact Match + Loading) =======
-document.getElementById("search").addEventListener("keydown", function(e) {
-    if (e.key === "Enter") {
-        const query = this.value.trim().toLowerCase();
-        const output = document.getElementById("output");
+    var un = document.forms["myform"]["uname"].value;
+    var pw = document.forms["myform"]["pass"].value;
+    if (un=="KOMANDAN" && pw=="#f4t4*")
+  {
+    window.open('https://sites.google.com/view/disperspuslatkodiklatau/komandan');
+  }
 
-        if (query === "") {
-            output.textContent = "⚠️ Tidak ada data yang ditampilkan. Ketik di panel kiri untuk mengakses file personel.";
-            return;
-        }
+/* ---------Copy code user dibawah ini---------- */
 
-        const agent = personnelDB.find(p =>
-            p.code_name.toLowerCase() === query ||
-            p.real_name.toLowerCase() === query
-        );
 
-        if (agent) {
-            simulateAccessSequence(output, () => {
-                const dossier = `
-========================================
-|   FILE: PERSONNEL INTELLIGENCE DATA   |
-|   CLASSIFICATION: TOP SECRET          |
-========================================
 
-[DATA DIRI]
---------------------------------------------------
-NAMA            : ${agent.code_name}
-PANGKAT         : ${agent.real_name}
-NRP/NIP         : ${agent.gender}
-JABATAN         : ${agent.dob}
-KEWARGANEGARAAN : ${agent.nationality}
-TEMPAT LAHIR    : ${agent.birth_place}
-CURRENT STATUS  : ${agent.status}
-CLEARANCE LVL   : ${agent.clearance}
 
-[PENDIDIKAN UMUM]
-----------------------------------------------------------------------
-[TINGKAT PENDIDIKAN]   [ASAL SEKOLAH]    [TH MASUK]    [TAHUN KELUAR]
-----------------------------------------------------------------------
-SD    : ${agent.unit}
-SMP   : ${agent.specialization}
-SMA   : ${agent.ops_completed}
-D1    : ${agent.success_rate}%
-D2    : ${agent.alias}
-D3    : ${agent.alias}
-D4    : ${agent.alias}
-S1    : ${agent.alias}
-S2    : ${agent.alias}
-S3    : ${agent.alias}
 
-[DIKMA/DIKBANGUM]
---------------------------------------------------
-ASSIGNED UNIT   : ${agent.unit}
-SPECIALIZATION  : ${agent.specialization}
-COMPLETED OPS   : ${agent.ops_completed}
-SUCCESS RATE    : ${agent.success_rate}%
-KNOWN ALIASES   : ${agent.alias}
 
-[PENDIDIKAN MILITER/KURSUS]
---------------------------------------------------
-ASSIGNED UNIT   : ${agent.unit}
-SPECIALIZATION  : ${agent.specialization}
-COMPLETED OPS   : ${agent.ops_completed}
-SUCCESS RATE    : ${agent.success_rate}%
-KNOWN ALIASES   : ${agent.alias}
 
-[RIWAYAT PANGKAT]
---------------------------------------------------
-ASSIGNED UNIT   : ${agent.unit}
-SPECIALIZATION  : ${agent.specialization}
-COMPLETED OPS   : ${agent.ops_completed}
-SUCCESS RATE    : ${agent.success_rate}%
-KNOWN ALIASES   : ${agent.alias}
 
-[riWAYAT JABATAN/PENEMPATAN]
---------------------------------------------------
-ASSIGNED UNIT   : ${agent.unit}
-SPECIALIZATION  : ${agent.specialization}
-COMPLETED OPS   : ${agent.ops_completed}
-SUCCESS RATE    : ${agent.success_rate}%
-KNOWN ALIASES   : ${agent.alias}
+/* ---------Copy code user diatas ini-------- */
 
-[TANDA JASA/KEHORMATAN]
---------------------------------------------------
-ASSIGNED UNIT   : ${agent.unit}
-SPECIALIZATION  : ${agent.specialization}
-COMPLETED OPS   : ${agent.ops_completed}
-SUCCESS RATE    : ${agent.success_rate}%
-KNOWN ALIASES   : ${agent.alias}
 
-[SECURITY FOOTNOTE]
---------------------------------------------------
-This dossier is property of the Directorate of Covert Operations.
-Unauthorized access or duplication is punishable under Directive 47-A.
-
-<END OF FILE>
-========================================
-Retrieved on: ${new Date().toLocaleString()}
-`;
-                typeWriter(output, dossier, 5);
-            });
-        } else {
-            output.innerHTML = `<span class="not-found">❌ ACCESS DENIED: No personnel record found for "${this.value}".</span>`;
-        }
-    }
-});
+    else
+  {
+    Swal.fire({
+      title: 'Not allowed',
+      
+    });
+  }
+  }
+  
 </script>
 
-</tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
+ 
